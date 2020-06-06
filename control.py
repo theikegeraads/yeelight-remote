@@ -77,7 +77,7 @@ class mainWindow(qtw.QWidget):
         toggleButton = qtw.QPushButton("Power", clicked = lToggle)
         toggleButton.setMaximumWidth(45)
         toggleButton.setMinimumHeight(42)
-        toggleButton.setStyleSheet("QPushButton { color: #FDFDFD; background: red }")
+        toggleButton.setStyleSheet("QPushButton { color: #FF0002; background: #2d2d2d }")
         container.layout().addWidget(toggleButton, 0, 0)
 
         self.ipLabel = qtw.QLabel(f"Not Connected.")
@@ -203,6 +203,48 @@ class mainWindow(qtw.QWidget):
         lumSlide.setTickInterval(1)
         lumSlide.setSingleStep(1)
         container.layout().addWidget(lumSlide, 15, 1, 1, 3)
+
+        spacer3 = qtw.QPushButton("-Flash Mode-")
+        spacer3.setStyleSheet("background:transparent;border:none;color:white;")
+        container.layout().addWidget(spacer3, 16, 0, 1, 3)
+
+        intensityLabel = qtw.QLabel("Intensity: ")
+        intensityLabel.setStyleSheet("color:white;")
+        container.layout().addWidget(intensityLabel, 17, 0)
+
+        intensitySlide = qtw.QSlider(Qt.Horizontal)
+        intensitySlide.setMinimum(2)
+        intensitySlide.setMaximum(6)
+        intensitySlide.setTickInterval(1)
+        intensitySlide.setSingleStep(1)
+        container.layout().addWidget(intensitySlide, 17, 1, 1, 3)
+
+        amountLabel = qtw.QLabel("Flashes: ")
+        amountLabel.setStyleSheet("color:white;")
+        container.layout().addWidget(amountLabel, 18, 0)
+
+        amountSlide = qtw.QSlider(Qt.Horizontal)
+        amountSlide.setMinimum(1)
+        amountSlide.setMaximum(10)
+        amountSlide.setTickInterval(1)
+        amountSlide.setSingleStep(1)
+        container.layout().addWidget(amountSlide, 18, 1, 1, 3)
+
+        spacer4 = qtw.QPushButton("")
+        spacer4.setStyleSheet("background:transparent;border:none;color:white;")
+        container.layout().addWidget(spacer4, 19, 0, 1, 3)
+
+        ipField = qtw.QLineEdit()
+        ipField.setPlaceholderText("Yeelight IP Address...")
+        ipField.setStyleSheet("background:white;color:black")
+        container.layout().addWidget(ipField, 20, 0, 1, 3)
+
+        connectButton = qtw.QPushButton("Connect")
+        connectButton.setStyleSheet("background:#2d2d2d;color:white")
+        container.layout().addWidget(connectButton, 21, 0, 1 ,3)
+
+
+
 
         self.show()
 
