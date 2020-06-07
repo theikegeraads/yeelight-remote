@@ -70,7 +70,7 @@ class mainWindow(qtw.QWidget):
                     yl = Bulb(ipAddress)
                     yl.toggle()
                 except:
-                    pass
+                    print("error")
 
         def lOn():
             if self.isConnected == False:
@@ -80,7 +80,7 @@ class mainWindow(qtw.QWidget):
                     yl = Bulb(ipAddress)
                     yl.turn_on()
                 except:
-                    pass
+                    print("error")
 
         def lOff():
             if self.isConnected == False:
@@ -90,7 +90,7 @@ class mainWindow(qtw.QWidget):
                     yl = Bulb(ipAddress)
                     yl.turn_off()
                 except:
-                    pass
+                    print("error")
 
         
         def lRed():
@@ -101,7 +101,7 @@ class mainWindow(qtw.QWidget):
                     yl = Bulb(ipAddress)
                     yl.set_rgb(255, 0, 0)
                 except:
-                    pass           
+                    print("error")           
 
         def lGreen():
             if self.isConnected == False:
@@ -111,7 +111,7 @@ class mainWindow(qtw.QWidget):
                     yl = Bulb(ipAddress)
                     yl.set_rgb(0, 255, 0)
                 except:
-                    pass           
+                    print("error")           
 
         def lBlue():
             if self.isConnected == False:
@@ -121,7 +121,7 @@ class mainWindow(qtw.QWidget):
                     yl = Bulb(ipAddress)
                     yl.set_rgb(0, 0, 255)
                 except:
-                    pass           
+                    print("error")           
 
         def lOrange():
             if self.isConnected == False:
@@ -131,7 +131,7 @@ class mainWindow(qtw.QWidget):
                     yl = Bulb(ipAddress)
                     yl.set_rgb(255, 165, 0)
                 except:
-                    pass           
+                    print("error")           
 
         def lYellow():
             if self.isConnected == False:
@@ -141,7 +141,7 @@ class mainWindow(qtw.QWidget):
                     yl = Bulb(ipAddress)
                     yl.set_rgb(255, 255, 0)
                 except:
-                    pass           
+                    print("error")           
 
         def lCFB():
             if self.isConnected == False:
@@ -151,7 +151,7 @@ class mainWindow(qtw.QWidget):
                     yl = Bulb(ipAddress)
                     yl.set_rgb(100,149,237)
                 except:
-                    pass           
+                    print("error")           
 
         def lBright():
             if self.isConnected == False:
@@ -163,13 +163,113 @@ class mainWindow(qtw.QWidget):
                     yl = Bulb(ipAddress)
                     yl.set_brightness(cBrightness)
                 except:
-                    pass
+                    print("error")
+
+        
+        def lRGB():
+            rValue = redSlide.value()
+            gValue = greenSlide.value()
+            bValue = blueSlide.value()
+            if self.isConnected == False:
+                ipField.setPlaceholderText("Please enter an IP Address.")
+            else:
+                try:
+                    redLabel.setText(f"Red: {rValue}")
+                    greenLabel.setText(f"Green: {gValue}")
+                    blueLabel.setText(f"Blue: {bValue}")
+                    yl = Bulb(ipAddress)
+                    yl.set_rgb(rValue, gValue, bValue)
+                except:
+                    print("error")
+
+        def lHSV():
+            hValue = hueSlide.value()
+            sValue = saturationSlide.value()
+            vValue = lumSlide.value()
+            if self.isConnected == False:
+                ipField.setPlaceholderText("Please enter an IP Address.")
+            else:
+                try:
+                    hueLabel.setText(f"Hue: {hValue}")
+                    saturationLabel.setText(f"Saturation: {sValue}")
+                    lumLabel.setText(f"Brightness: {vValue}")
+                    yl = Bulb(ipAddress)
+                    yl.set_hsv(hValue, sValue, vValue)
+                except:
+                    print("error")
+
+        def lFlashIntensity():
+            self.intensityAmount = intensitySlide.value()
+            intensityLabel.setText(f"Intensity: {self.intensityAmount}")
+
+        def lFlashAmount():
+            self.flashAmount = amountSlide.value()
+            amountLabel.setText(f"Amount: {self.flashAmount}")
+
+        def startFlash():
+            if self.isConnected == False:
+                ipField.setPlaceholderText("Please enter an IP Address.")
+            else:
+                yl = Bulb(ipAddress)
+                if self.intensityAmount == 2:
+                    for x in range(self.flashAmount):
+                        try:
+                            yl.set_rgb(255, 0, 0, effect = sudden)
+                            yl.set_rgb(0, 255, 0, effect = sudden)
+                            print("ok")
+                        except:
+                            pass
+                elif self.intensityAmount == 3:
+                    for x in range(self.flashAmount):
+                        try:
+                            yl.set_rgb(255, 0, 0, effect = sudden)
+                            yl.set_rgb(0, 255, 0, effect = sudden)
+                            yl.set_rgb(0, 0, 255, effect = sudden)
+                        except:
+                            pass
+                            
+                elif self.intensityAmount == 4:
+                    for x in range(self.flashAmount):
+                        try:
+                            yl.set_rgb(255, 0, 0, effect = sudden)
+                            yl.set_rgb(0, 255, 0, effect = sudden)
+                            yl.set_rgb(0, 0, 255, effect = sudden)
+                            yl.set_rgb(255, 255, 0, effect = sudden)
+                        except:
+                            pass
+                elif self.intensityAmount == 5:
+                    for x in range(self.flashAmount):
+                        try:
+                            yl.set_rgb(255, 0, 0, effect = sudden)
+                            yl.set_rgb(0, 255, 0, effect = sudden)
+                            yl.set_rgb(0, 0, 255, effect = sudden)
+                            yl.set_rgb(255, 255, 0, effect = sudden)
+                            yl.set_rgb(255, 0, 255, effect = sudden)
+                        except:
+                            pass    
+                elif self.intensityAmount == 6:
+                    for x in range(self.flashAmount):
+                        try:
+                            yl.set_rgb(255, 0, 0, effect = sudden)
+                            yl.set_rgb(0, 255, 0, effect = sudden)
+                            yl.set_rgb(0, 0, 255, effect = sudden)
+                            yl.set_rgb(255, 255, 0, effect = sudden)
+                            yl.set_rgb(255, 0, 255, effect = sudden)
+                            yl.set_rgb(0, 255, 255, effect = sudden)
+                        except:
+                            pass
 
 
 
 
 
 
+
+
+
+
+
+            yl = Bulb(ipAddress)
 
         toggleButton = qtw.QPushButton("Power", clicked = lToggle)
         toggleButton.setMaximumWidth(45)
@@ -177,7 +277,6 @@ class mainWindow(qtw.QWidget):
         toggleButton.setStyleSheet("QPushButton { color: #FF0002; background: #2d2d2d }")
         container.layout().addWidget(toggleButton, 0, 0)
         
-
         ipLabel = qtw.QLabel(f"Not Connected.")
         ipLabel.setStyleSheet("color: white;")
         container.layout().addWidget(ipLabel, 0, 2)
@@ -232,36 +331,36 @@ class mainWindow(qtw.QWidget):
         brightLabel.setStyleSheet("color: white; border: none; background:transparent;")
         container.layout().addWidget(brightLabel, 8, 0, 1, 3)
 
-        redSlide = qtw.QSlider(Qt.Horizontal)
+        redSlide = qtw.QSlider(Qt.Horizontal, valueChanged = lRGB)
         redSlide.setMinimum(0)
         redSlide.setMaximum(255)
         redSlide.setTickInterval(1)
         redSlide.setSingleStep(1)
         container.layout().addWidget(redSlide, 9, 1, 1, 3)
 
-        greenSlide = qtw.QSlider(Qt.Horizontal)
+        greenSlide = qtw.QSlider(Qt.Horizontal, valueChanged = lRGB)
         greenSlide.setMinimum(0)
         greenSlide.setMaximum(255)
         greenSlide.setTickInterval(1)
         greenSlide.setSingleStep(1)
         container.layout().addWidget(greenSlide, 10, 1, 1, 3)
 
-        blueSlide = qtw.QSlider(Qt.Horizontal)
+        blueSlide = qtw.QSlider(Qt.Horizontal, valueChanged = lRGB)
         blueSlide.setMinimum(0)
         blueSlide.setMaximum(255)
         blueSlide.setTickInterval(1)
         blueSlide.setSingleStep(1)
         container.layout().addWidget(blueSlide, 11, 1, 1, 3)
 
-        redLabel = qtw.QLabel("Red Value: ")
+        redLabel = qtw.QLabel("Red: 0")
         redLabel.setStyleSheet("color:white;")
         container.layout().addWidget(redLabel, 9, 0)
 
-        greenLabel = qtw.QLabel("Green Value: ")
+        greenLabel = qtw.QLabel("Green: 0")
         greenLabel.setStyleSheet("color:white;")
         container.layout().addWidget(greenLabel, 10, 0)
 
-        blueLabel = qtw.QLabel("Blue Value: ")
+        blueLabel = qtw.QLabel("Blue: 0")
         blueLabel.setStyleSheet("color:white;")
         container.layout().addWidget(blueLabel, 11, 0)
 
@@ -269,35 +368,35 @@ class mainWindow(qtw.QWidget):
         orLabel.setStyleSheet("color:white; border:none;background:transparent;")
         container.layout().addWidget(orLabel, 12, 0, 1, 3)
 
-        hueLabel = qtw.QLabel("Hue: ")
+        hueLabel = qtw.QLabel("Hue: 0")
         hueLabel.setStyleSheet("color:white;")
         container.layout().addWidget(hueLabel, 13, 0)
 
-        saturationLabel = qtw.QLabel("Saturation: ")
+        saturationLabel = qtw.QLabel("Saturation: 0")
         saturationLabel.setStyleSheet("color:white;")
         container.layout().addWidget(saturationLabel, 14, 0)
 
-        lumLabel = qtw.QLabel("Luminance: ")
+        lumLabel = qtw.QLabel("Brightness: 0")
         lumLabel.setStyleSheet("color:white;")
         container.layout().addWidget(lumLabel, 15, 0)
         
-        hueSlide = qtw.QSlider(Qt.Horizontal)
+        hueSlide = qtw.QSlider(Qt.Horizontal, valueChanged = lHSV)
         hueSlide.setMinimum(0)
-        hueSlide.setMaximum(255)
+        hueSlide.setMaximum(360)
         hueSlide.setTickInterval(1)
         hueSlide.setSingleStep(1)
         container.layout().addWidget(hueSlide, 13, 1, 1, 3)
             
-        saturationSlide = qtw.QSlider(Qt.Horizontal)
+        saturationSlide = qtw.QSlider(Qt.Horizontal, valueChanged = lHSV)
         saturationSlide.setMinimum(0)
-        saturationSlide.setMaximum(255)
+        saturationSlide.setMaximum(100)
         saturationSlide.setTickInterval(1)
         saturationSlide.setSingleStep(1)
         container.layout().addWidget(saturationSlide, 14, 1, 1, 3)
 
-        lumSlide = qtw.QSlider(Qt.Horizontal)
+        lumSlide = qtw.QSlider(Qt.Horizontal, valueChanged = lHSV)
         lumSlide.setMinimum(0)
-        lumSlide.setMaximum(255)
+        lumSlide.setMaximum(100)
         lumSlide.setTickInterval(1)
         lumSlide.setSingleStep(1)
         container.layout().addWidget(lumSlide, 15, 1, 1, 3)
@@ -310,7 +409,7 @@ class mainWindow(qtw.QWidget):
         intensityLabel.setStyleSheet("color:white;")
         container.layout().addWidget(intensityLabel, 17, 0)
 
-        intensitySlide = qtw.QSlider(Qt.Horizontal)
+        intensitySlide = qtw.QSlider(Qt.Horizontal, valueChanged = lFlashIntensity)
         intensitySlide.setMinimum(2)
         intensitySlide.setMaximum(6)
         intensitySlide.setTickInterval(1)
@@ -321,14 +420,14 @@ class mainWindow(qtw.QWidget):
         amountLabel.setStyleSheet("color:white;")
         container.layout().addWidget(amountLabel, 18, 0)
 
-        amountSlide = qtw.QSlider(Qt.Horizontal)
+        amountSlide = qtw.QSlider(Qt.Horizontal, valueChanged = lFlashAmount)
         amountSlide.setMinimum(1)
         amountSlide.setMaximum(10)
         amountSlide.setTickInterval(1)
         amountSlide.setSingleStep(1)
         container.layout().addWidget(amountSlide, 18, 1, 1, 3)
 
-        flashButton = qtw.QPushButton("Flash!")
+        flashButton = qtw.QPushButton("Flash!", clicked = startFlash)
         flashButton.setStyleSheet('background-color: #2D2D2D; color: white;')
         container.layout().addWidget(flashButton, 19, 0, 1, 3)
 
