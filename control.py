@@ -19,62 +19,7 @@ class mainWindow(qtw.QWidget):
         container = qtw.QWidget()
         container.setLayout(qtw.QGridLayout())
 
-        def lconnect():
-            ipConnect = self.ipField.text()
-            try:
-                light = Bulb(ipConnect)
-                light.toggle()
-                light.toggle()
-                self.ipField.setText("")
-                self.ipField.setPlaceholderText(f"Connected to {ipConnect}")
-                global currentIP
-                currentIP = ipConnect
-            except:
-                self.ipField.setText("")
-                self.ipField.setPlaceholderText(f"Could not connect to {ipConnect} (Invalid IP)")
-                
-        def lToggle():
-            global currentIP
-            if realIP == "":
-                self.ipField.setPlaceholderText(f"Please enter an IP Adress")
-            else:
-                light = Bulb(currentIP)
-                light.toggle()
-
-        def lOn():
-            global currentIP
-            if realIP == "":
-                self.ipField.setPlaceholderText(f"Please enter an IP Adress")
-            else:
-                light = Bulb(currentIP)
-                light.turn_on()
-
-        def lOff():
-            global currentIP
-            if realIP == "":
-                self.ipField.setPlaceholderText(f"Please enter an IP Adress")
-            else:     
-                light = Bulb(currentIP)
-                light.turn_off()
-
-        def lBrightness():
-            cValue = brightDial.value()
-            brightLabel.setText(f"Brightness: {cValue}")     
-            global currentIP
-            if realIP == "":
-                # self.ipField.setPlaceholderText(f"Please enter an IP Adress")
-                pass
-            else:
-                light = Bulb(currentIP)
-                light.set_brightness(cValue)
-        def lRed():
-            if realIP == "":
-                self.ipField.setPlaceholderText(f"Please enter an IP Adress")
-            else:   
-                light = Bulb(currentIP)
-                light.set_rgb(255, 0, 0)
-
-        toggleButton = qtw.QPushButton("Power", clicked = lToggle)
+        toggleButton = qtw.QPushButton("Power")
         toggleButton.setMaximumWidth(45)
         toggleButton.setMinimumHeight(42)
         toggleButton.setStyleSheet("QPushButton { color: #FF0002; background: #2d2d2d }")
@@ -84,11 +29,11 @@ class mainWindow(qtw.QWidget):
         self.ipLabel.setStyleSheet("color: white;")
         container.layout().addWidget(self.ipLabel, 0, 2)
 
-        onButton = qtw.QPushButton("On", clicked = lToggle)
+        onButton = qtw.QPushButton("On")
         onButton.setStyleSheet("QPushButton { color: white; background: #2D2D2d }")
         container.layout().addWidget(onButton, 1, 0, 1, 4)
 
-        offButton = qtw.QPushButton("Off", clicked = lOff)
+        offButton = qtw.QPushButton("Off")
         offButton.setStyleSheet("QPushButton { background-color: #2D2D2D; color: white; }")
         container.layout().addWidget(offButton, 2, 0, 1, 4)
 
@@ -124,7 +69,7 @@ class mainWindow(qtw.QWidget):
         spacer2.setStyleSheet("background: #121212; border: 1px solid #121212 ")
         container.layout().addWidget(spacer2, 6, 0, 1, 3)
 
-        brightDial = qtw.QDial(valueChanged = lBrightness)
+        brightDial = qtw.QDial()
         brightDial.setMinimum(0)
         brightDial.setMaximum(100)
         brightDial.setStyleSheet("QDial { Background-color: #2D2D2D; }")
@@ -230,21 +175,22 @@ class mainWindow(qtw.QWidget):
         amountSlide.setSingleStep(1)
         container.layout().addWidget(amountSlide, 18, 1, 1, 3)
 
+        flashButton = qtw.QPushButton("Flash!")
+        flashButton.setStyleSheet('background-color: #2D2D2D; color: white;')
+        container.layout().addWidget(flashButton, 19, 0, 1, 3)
+
         spacer4 = qtw.QPushButton("")
         spacer4.setStyleSheet("background:transparent;border:none;color:white;")
-        container.layout().addWidget(spacer4, 19, 0, 1, 3)
+        container.layout().addWidget(spacer4, 20, 0, 1, 3)
 
         ipField = qtw.QLineEdit()
         ipField.setPlaceholderText("Yeelight IP Address...")
         ipField.setStyleSheet("background:white;color:black")
-        container.layout().addWidget(ipField, 20, 0, 1, 3)
+        container.layout().addWidget(ipField, 21, 0, 1, 3)
 
         connectButton = qtw.QPushButton("Connect")
         connectButton.setStyleSheet("background:#2d2d2d;color:white")
-        container.layout().addWidget(connectButton, 21, 0, 1 ,3)
-
-
-
+        container.layout().addWidget(connectButton, 22, 0, 1 ,3)
 
         self.show()
 
