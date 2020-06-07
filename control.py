@@ -3,8 +3,7 @@ from PyQt5.QtCore import *
 from yeelight import *
 from PyQt5 import *
 
-currentIP = "Not connected..."
-realIP = ""
+ipAddress = ""
 
 class mainWindow(qtw.QWidget):
     def __init__(self):
@@ -15,25 +14,179 @@ class mainWindow(qtw.QWidget):
         self.setWindowIcon(QtGui.QIcon('icon/app-icon.png'))
         self.keypad()
          
+
+
+
+
+
+
+
     def keypad(self):
         container = qtw.QWidget()
         container.setLayout(qtw.QGridLayout())
+        self.isConnected = False 
 
-        toggleButton = qtw.QPushButton("Power")
+        def lConnect():
+            if self.isConnected == False:
+                global ipAddress
+                ipAddress = ipField.text()
+                try:
+                    yl = Bulb(ipAddress)
+                    yl.toggle()
+                    yl.toggle()
+                    ipLabel.setText(f"{ipAddress}")
+                    connectButton.setText("Disconnect")
+                    ipField.setText("")
+                    ipField.setPlaceholderText(f"Connected to {ipAddress}.")
+                    ipField.setDisabled(1)
+                    ipField.setStyleSheet("background:#7F7F7F")
+                    self.isConnected = True
+                    print("connected")
+                    
+                except:
+                    ipField.setText("")
+                    ipLabel.setText("Not Connected")
+                    ipField.setPlaceholderText(f"Failed to connect to {ipAddress}.")
+                    print("failed")
+            else:
+                ipLabel.setText("Not Connected.")
+                ipField.setStyleSheet("background:white")
+                ipField.setText("")
+                ipField.setPlaceholderText("Yeelight IP Address.")
+                ipField.setDisabled(0)
+                connectButton.setText("Connect")
+                self.isConnected = False
+                print("Disconnected")
+
+                
+                
+
+
+        def lToggle():
+            if self.isConnected == False:
+                ipField.setPlaceholderText("Please enter an IP Address.")
+            else:
+                try:
+                    yl = Bulb(ipAddress)
+                    yl.toggle()
+                except:
+                    pass
+
+        def lOn():
+            if self.isConnected == False:
+                ipField.setPlaceholderText("Please enter an IP Address.")
+            else:
+                try:
+                    yl = Bulb(ipAddress)
+                    yl.turn_on()
+                except:
+                    pass
+
+        def lOff():
+            if self.isConnected == False:
+                ipField.setPlaceholderText("Please enter an IP Address.")
+            else:
+                try:
+                    yl = Bulb(ipAddress)
+                    yl.turn_off()
+                except:
+                    pass
+
+        
+        def lRed():
+            if self.isConnected == False:
+                ipField.setPlaceholderText("Please enter an IP Address.")
+            else:
+                try:
+                    yl = Bulb(ipAddress)
+                    yl.set_rgb(255, 0, 0)
+                except:
+                    pass           
+
+        def lGreen():
+            if self.isConnected == False:
+                ipField.setPlaceholderText("Please enter an IP Address.")
+            else:
+                try:
+                    yl = Bulb(ipAddress)
+                    yl.set_rgb(0, 255, 0)
+                except:
+                    pass           
+
+        def lBlue():
+            if self.isConnected == False:
+                ipField.setPlaceholderText("Please enter an IP Address.")
+            else:
+                try:
+                    yl = Bulb(ipAddress)
+                    yl.set_rgb(0, 0, 255)
+                except:
+                    pass           
+
+        def lOrange():
+            if self.isConnected == False:
+                ipField.setPlaceholderText("Please enter an IP Address.")
+            else:
+                try:
+                    yl = Bulb(ipAddress)
+                    yl.set_rgb(255, 165, 0)
+                except:
+                    pass           
+
+        def lYellow():
+            if self.isConnected == False:
+                ipField.setPlaceholderText("Please enter an IP Address.")
+            else:
+                try:
+                    yl = Bulb(ipAddress)
+                    yl.set_rgb(255, 255, 0)
+                except:
+                    pass           
+
+        def lCFB():
+            if self.isConnected == False:
+                ipField.setPlaceholderText("Please enter an IP Address.")
+            else:
+                try:
+                    yl = Bulb(ipAddress)
+                    yl.set_rgb(100,149,237)
+                except:
+                    pass           
+
+        def lBright():
+            if self.isConnected == False:
+                ipField.setPlaceholderText("Please enter an IP Address.")
+            else:
+                try:
+                    cBrightness = brightDial.value()
+                    brightLabel.setText(f"Brightness: {cBrightness}")
+                    yl = Bulb(ipAddress)
+                    yl.set_brightness(cBrightness)
+                except:
+                    pass
+
+
+
+
+
+
+
+        toggleButton = qtw.QPushButton("Power", clicked = lToggle)
         toggleButton.setMaximumWidth(45)
         toggleButton.setMinimumHeight(42)
         toggleButton.setStyleSheet("QPushButton { color: #FF0002; background: #2d2d2d }")
         container.layout().addWidget(toggleButton, 0, 0)
+        
 
-        self.ipLabel = qtw.QLabel(f"Not Connected.")
-        self.ipLabel.setStyleSheet("color: white;")
-        container.layout().addWidget(self.ipLabel, 0, 2)
+        ipLabel = qtw.QLabel(f"Not Connected.")
+        ipLabel.setStyleSheet("color: white;")
+        container.layout().addWidget(ipLabel, 0, 2)
 
-        onButton = qtw.QPushButton("On")
+        onButton = qtw.QPushButton("On", clicked = lOn)
         onButton.setStyleSheet("QPushButton { color: white; background: #2D2D2d }")
         container.layout().addWidget(onButton, 1, 0, 1, 4)
 
-        offButton = qtw.QPushButton("Off")
+        offButton = qtw.QPushButton("Off", clicked = lOff)
         offButton.setStyleSheet("QPushButton { background-color: #2D2D2D; color: white; }")
         container.layout().addWidget(offButton, 2, 0, 1, 4)
 
@@ -41,27 +194,27 @@ class mainWindow(qtw.QWidget):
         spacer1.setStyleSheet("background: #121212; border: 1px solid #121212 ")
         container.layout().addWidget(spacer1, 3, 0, 1, 3)
 
-        redButton = qtw.QPushButton("Red")
+        redButton = qtw.QPushButton("Red", clicked = lRed)
         redButton.setStyleSheet("QPushButton { background-color: #2D2D2D; color: red; }")
         container.layout().addWidget(redButton, 4, 0)
         
-        greenButton = qtw.QPushButton("Green")
+        greenButton = qtw.QPushButton("Green", clicked = lGreen)
         greenButton.setStyleSheet("QPushButton { background-color: #2D2D2D; color: green; }")
         container.layout().addWidget(greenButton, 4, 1)
 
-        blueButton = qtw.QPushButton("Blue")
+        blueButton = qtw.QPushButton("Blue", clicked = lBlue)
         blueButton.setStyleSheet("QPushButton { background-color: #2D2D2D; color: blue; }")
         container.layout().addWidget(blueButton, 4, 2)
 
-        orangeButton = qtw.QPushButton("Orange")
+        orangeButton = qtw.QPushButton("Orange", clicked = lOrange)
         orangeButton.setStyleSheet("QPushButton { background-color: #2D2D2D; color: orange; }")
         container.layout().addWidget(orangeButton, 5, 0)
         
-        yellowButton = qtw.QPushButton("Yellow")
+        yellowButton = qtw.QPushButton("Yellow", clicked = lYellow)
         yellowButton.setStyleSheet("QPushButton { background-color: #2D2D2D; color: yellow; }")
         container.layout().addWidget(yellowButton, 5, 1)
 
-        cfbButton = qtw.QPushButton("Cyan")
+        cfbButton = qtw.QPushButton("Cyan", clicked = lCFB)
         cfbButton.setStyleSheet("QPushButton { background-color: #2D2D2D; color: cornflowerblue; }")
         container.layout().addWidget(cfbButton, 5, 2)
 
@@ -69,7 +222,7 @@ class mainWindow(qtw.QWidget):
         spacer2.setStyleSheet("background: #121212; border: 1px solid #121212 ")
         container.layout().addWidget(spacer2, 6, 0, 1, 3)
 
-        brightDial = qtw.QDial()
+        brightDial = qtw.QDial(valueChanged = lBright)
         brightDial.setMinimum(0)
         brightDial.setMaximum(100)
         brightDial.setStyleSheet("QDial { Background-color: #2D2D2D; }")
@@ -188,7 +341,7 @@ class mainWindow(qtw.QWidget):
         ipField.setStyleSheet("background:white;color:black")
         container.layout().addWidget(ipField, 21, 0, 1, 3)
 
-        connectButton = qtw.QPushButton("Connect")
+        connectButton = qtw.QPushButton("Connect", clicked = lConnect)
         connectButton.setStyleSheet("background:#2d2d2d;color:white")
         container.layout().addWidget(connectButton, 22, 0, 1 ,3)
 
