@@ -2,6 +2,7 @@ import PyQt5.QtWidgets as qtw
 from PyQt5.QtCore import *
 from yeelight import *
 from PyQt5 import *
+import time
 
 ipAddress = ""
 
@@ -211,66 +212,59 @@ class mainWindow(qtw.QWidget):
                 ipField.setPlaceholderText("Please enter an IP Address.")
             else:
                 yl = Bulb(ipAddress)
+                yl.effect = "sudden"
                 if self.intensityAmount == 2:
                     for x in range(self.flashAmount):
                         try:
-                            yl.set_rgb(255, 0, 0, effect = sudden)
-                            yl.set_rgb(0, 255, 0, effect = sudden)
+                            yl.set_rgb(255, 0, 0)
+                            yl.set_rgb(0, 255, 0)
                             print("ok")
                         except:
                             pass
                 elif self.intensityAmount == 3:
                     for x in range(self.flashAmount):
                         try:
-                            yl.set_rgb(255, 0, 0, effect = sudden)
-                            yl.set_rgb(0, 255, 0, effect = sudden)
-                            yl.set_rgb(0, 0, 255, effect = sudden)
+                            yl.set_rgb(255, 0, 0)
+                            yl.set_rgb(0, 255, 0)
+                            yl.set_rgb(0, 0, 255)
                         except:
                             pass
                             
                 elif self.intensityAmount == 4:
                     for x in range(self.flashAmount):
                         try:
-                            yl.set_rgb(255, 0, 0, effect = sudden)
-                            yl.set_rgb(0, 255, 0, effect = sudden)
-                            yl.set_rgb(0, 0, 255, effect = sudden)
-                            yl.set_rgb(255, 255, 0, effect = sudden)
+                            yl.set_rgb(255, 0, 0)
+                            yl.set_rgb(0, 255, 0)
+                            yl.set_rgb(0, 0, 255)
+                            yl.set_rgb(255, 255, 0)
                         except:
                             pass
                 elif self.intensityAmount == 5:
                     for x in range(self.flashAmount):
                         try:
-                            yl.set_rgb(255, 0, 0, effect = sudden)
-                            yl.set_rgb(0, 255, 0, effect = sudden)
-                            yl.set_rgb(0, 0, 255, effect = sudden)
-                            yl.set_rgb(255, 255, 0, effect = sudden)
-                            yl.set_rgb(255, 0, 255, effect = sudden)
+                            yl.set_rgb(255, 0, 0)
+                            yl.set_rgb(0, 255, 0)
+                            yl.set_rgb(0, 0, 255)
+                            yl.set_rgb(255, 255, 0)
+                            yl.set_rgb(255, 0, 255)
                         except:
                             pass    
                 elif self.intensityAmount == 6:
                     for x in range(self.flashAmount):
                         try:
-                            yl.set_rgb(255, 0, 0, effect = sudden)
-                            yl.set_rgb(0, 255, 0, effect = sudden)
-                            yl.set_rgb(0, 0, 255, effect = sudden)
-                            yl.set_rgb(255, 255, 0, effect = sudden)
-                            yl.set_rgb(255, 0, 255, effect = sudden)
-                            yl.set_rgb(0, 255, 255, effect = sudden)
+                            yl.set_rgb(255, 0, 0)
+                            yl.set_rgb(0, 255, 0)
+                            yl.set_rgb(0, 0, 255)
+                            yl.set_rgb(255, 255, 0)
+                            yl.set_rgb(255, 0, 255)
+                            yl.set_rgb(0, 255, 255)
                         except:
                             pass
+        def secretConnect():
+            ipField.setText("192.168.178.11")
+            lConnect()
 
-
-
-
-
-
-
-
-
-
-
-            yl = Bulb(ipAddress)
-
+                        
         toggleButton = qtw.QPushButton("Power", clicked = lToggle)
         toggleButton.setMaximumWidth(45)
         toggleButton.setMinimumHeight(42)
@@ -431,7 +425,7 @@ class mainWindow(qtw.QWidget):
         flashButton.setStyleSheet('background-color: #2D2D2D; color: white;')
         container.layout().addWidget(flashButton, 19, 0, 1, 3)
 
-        spacer4 = qtw.QPushButton("")
+        spacer4 = qtw.QPushButton("", clicked = secretConnect)
         spacer4.setStyleSheet("background:transparent;border:none;color:white;")
         container.layout().addWidget(spacer4, 20, 0, 1, 3)
 
