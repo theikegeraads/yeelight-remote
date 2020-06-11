@@ -14,18 +14,12 @@ class mainWindow(qtw.QWidget):
         self.setStyleSheet("background-color: #121212;")
         self.setWindowIcon(QtGui.QIcon('icon/app-icon.png'))
         self.keypad()
-         
-
-
-
-
-
-
 
     def keypad(self):
         container = qtw.QWidget()
         container.setLayout(qtw.QGridLayout())
         self.isConnected = False 
+        self.isOnToggle = False
 
         def lConnect():
             if self.isConnected == False:
@@ -59,10 +53,6 @@ class mainWindow(qtw.QWidget):
                 self.isConnected = False
                 print("Disconnected")
 
-                
-                
-
-
         def lToggle():
             if self.isConnected == False:
                 ipField.setPlaceholderText("Please enter an IP Address.")
@@ -70,6 +60,10 @@ class mainWindow(qtw.QWidget):
                 try:
                     yl = Bulb(ipAddress)
                     yl.toggle()
+                    if self.isOnToggle == True:
+                        toggleButton.setStyleSheet("color: green")
+                    else:
+                        toggleButton.setStyleSheet("color: red")
                 except:
                     print("error")
 
@@ -93,7 +87,6 @@ class mainWindow(qtw.QWidget):
                 except:
                     print("error")
 
-        
         def lRed():
             if self.isConnected == False:
                 ipField.setPlaceholderText("Please enter an IP Address.")
@@ -166,7 +159,6 @@ class mainWindow(qtw.QWidget):
                 except:
                     print("error")
 
-        
         def lRGB():
             rValue = redSlide.value()
             gValue = greenSlide.value()
@@ -229,7 +221,6 @@ class mainWindow(qtw.QWidget):
                             yl.set_rgb(0, 0, 255)
                         except:
                             pass
-                            
                 elif self.intensityAmount == 4:
                     for x in range(self.flashAmount):
                         try:
@@ -260,11 +251,15 @@ class mainWindow(qtw.QWidget):
                             yl.set_rgb(0, 255, 255)
                         except:
                             pass
+                yl.turn_off()
+                time.sleep(0.8)
+                yl.turn_on()
+                yl.set_color_temp(5000)
+                        
         def secretConnect():
             ipField.setText("192.168.178.11")
-            lConnect()
-
-                        
+            lConnect()             
+               
         toggleButton = qtw.QPushButton("Power", clicked = lToggle)
         toggleButton.setMaximumWidth(45)
         toggleButton.setMinimumHeight(42)
@@ -439,11 +434,9 @@ class mainWindow(qtw.QWidget):
         container.layout().addWidget(connectButton, 22, 0, 1 ,3)
 
         self.show()
-
         self.layout().addWidget(container)
     
 app = qtw.QApplication([])
 mw = mainWindow()
-
 app.setStyle('Fusion')
 app.exec_()
